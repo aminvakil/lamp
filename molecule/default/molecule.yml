@@ -13,3 +13,6 @@ platforms:
     override_command: no
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      vault_password_file: "${MOLECULE_PROJECT_DIRECTORY}/vault.pw"
