@@ -1,0 +1,52 @@
+---
+- name: Create group {{ user_name }}
+  group:
+    name: "{{ user_name }}"
+    system: yes
+    state: present
+
+- name: Create user {{ user_name }}
+  user:
+    name: "{{ user_name }}"
+    group: "{{ user_name }}"
+    system: yes
+    create_home: yes
+    home: /srv/{{ user_name }}
+    shell: /sbin/nologin
+
+- name: Change permissions of /srv/{{ user_name }}
+  file:
+    path: /srv/{{ user_name }}
+    mode: '0711'
+
+- name: Create public_html in /srv/{{ user_name }}
+  file:
+    path: /srv/{{ user_name }}/public_html
+    state: directory
+    mode: '0711'
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: Create tmp in /srv/{{ user_name }}
+  file:
+    path: /srv/{{ user_name }}/tmp
+    state: directory
+    mode: '0711'
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: Create session in /srv/{{ user_name }}/tmp
+  file:
+    path: /srv/{{ user_name }}/tmp/session
+    state: directory
+    mode: '0711'
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: Create upload in /srv/{{ user_name }}/tmp
+  file:
+    path: /srv/{{ user_name }}/tmp/upload
+    state: directory
+    mode: '0711'
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"

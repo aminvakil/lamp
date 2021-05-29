@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  author: aminvakil
+  role_name: create_user
+  description: Creates User
+  license: GPL-3.0-only
+  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags:
+    - system
+    - user
