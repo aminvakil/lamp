@@ -78,7 +78,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install ansible-base.
+      - name: Install ansible-core.
         run: pip3 install ansible-core --pre
 
       - name: Build collection.
