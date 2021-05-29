@@ -89,7 +89,7 @@ jobs:
       - name: Push to galaxy if version has been bumped.
         run: |
             ansible-galaxy collection download --download-path /tmp aminvakil.lamp
-            if [ "$(grep version: /tmp/requirements.yml | tr -d '[:space:]')" = "$(grep version: galaxy.yml | tr -d '[:space:]')" ]; then
+            if [ "$(grep version: /tmp/requirements.yml | tr -d '[:space:]')" != "$(grep version: galaxy.yml | tr -d '[:space:]')" ]; then
               ansible-galaxy collection build
               ansible-galaxy collection publish aminvakil-lamp-*.tar.gz --token ${{ secrets.GALAXY_API_KEY }}
             fi
