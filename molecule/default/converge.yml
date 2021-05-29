@@ -1,6 +1,10 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    https: "{{ lookup('env', 'HTTPS') }}"
+    cloudflare: "{{ lookup('env', 'CLOUDFLARE') }}"
+    staging: "{{ lookup('env', 'STAGING') }}"
   roles:
     - role: create_user
     - role: httpd_initial
