@@ -4,4 +4,4 @@
   vars:
     mysql_initial: "{{ lookup('env', 'MYSQL_INITIAL') }}"
   roles:
-    - role: aminvakil.mysql_add_user
+    - role: mysql_add_user

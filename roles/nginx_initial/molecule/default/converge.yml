@@ -5,4 +5,4 @@
     letsencrypt: "{{ lookup('env', 'LETSENCRYPT') }}"
     cloudflare: "{{ lookup('env', 'CLOUDFLARE') }}"
   roles:
-    - role: aminvakil.nginx_initial
+    - role: nginx_initial
