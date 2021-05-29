@@ -35,8 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro:
-          - debian10
+        https: [false, true]
+        cloudflare: [false, true]
+        staging: [false, true]
+        distro: [debian10]
 
     steps:
       - name: Check out the codebase.
@@ -63,6 +65,9 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
+          HTTPS: ${{ matrix.https }}
+          CLOUDFLARE: ${{ matrix.cloudflare }}
+          STAGING: ${{ matrix.staging }}
 
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
