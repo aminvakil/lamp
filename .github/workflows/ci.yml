@@ -36,15 +36,7 @@ jobs:
     strategy:
       matrix:
         distro:
-          - centos8
-          - centos7
           - debian10
-          - ubuntu20.04
-          - ubuntu18.04
-          - ubuntu16.04
-          - fedora34
-          - fedora33
-          - fedora32
 
     steps:
       - name: Check out the codebase.
