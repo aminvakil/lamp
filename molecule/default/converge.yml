@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: create_user
+    - role: httpd_initial
+    - role: nginx_initial
+    - role: mysql_initial
+    - role: mysql_add_user
