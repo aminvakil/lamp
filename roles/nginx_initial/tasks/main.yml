@@ -1,0 +1,38 @@
+---
+- name: Install nginx
+  apt:
+    name: nginx
+    install_recommends: no
+    state: present
+  notify: restart nginx
+
+- name: Enable service
+  systemd:
+    name: nginx
+    enabled: yes
+
+- name: Edit Nginx main conf Configuration
+  template:
+    src: templates/etc/nginx/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: '0600'
+
+- name: Change permissions of nginx folders
+  file:
+    path: /etc/nginx/{{ item }}
+    mode: '0700'
+  loop:
+    - conf.d
+    - modules-available
+    - modules-enabled
+    - sites-available
+    - sites-enabled
+
+- name: Remove default nginx configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Include cloudflare configurations
+  include_tasks: cloudflare.yml
+  when: cloudflare | bool

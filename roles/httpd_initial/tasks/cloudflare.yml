@@ -1,0 +1,19 @@
+---
+- name: Enable remoteip module
+  community.general.apache2_module:
+    name: remoteip
+    state: present
+  notify: restart apache2
+
+- name: Copy cloudflare config
+  copy:
+    src: files/etc/apache2/conf-available/cf.conf
+    dest: /etc/apache2/conf-available/cf.conf
+    mode: '0600'
+  notify: restart apache2
+
+- name: Enable configurations
+  file:
+    src: /etc/apache2/conf-available/cf.conf
+    dest: /etc/apache2/conf-enabled/cf.conf
+    state: link

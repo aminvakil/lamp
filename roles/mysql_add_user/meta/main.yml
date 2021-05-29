@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: aminvakil
+  role_name: mysql_add_user
+  description: Adds MySQL User and DB on Debian Buster
+  license: GPL-3.0-only
+  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+
+  galaxy_tags:
+    - debian
+    - mysql
+    - mariadb
+    - lamp

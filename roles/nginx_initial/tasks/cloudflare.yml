@@ -1,0 +1,7 @@
+---
+- name: Copy cloudflare config
+  copy:
+    src: files/etc/nginx/conf.d/cf.conf
+    dest: /etc/nginx/conf.d/cf.conf
+    mode: '0600'
+  notify: restart nginx

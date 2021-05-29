@@ -1,0 +1,74 @@
+---
+- block:
+    - name: Install aminvakil.mysql_initial role from ansible-galaxy
+      command: ansible-galaxy install aminvakil.mysql_initial
+      register: result
+      changed_when: '"already installed" not in result.stderr'
+      become: false
+      delegate_to: localhost
+
+    - name: Install mysql
+      include_role:
+        name: aminvakil.mysql_initial
+  when: mysql_initial | bool
+
+- name: Check if mysql is installed or not
+  command: ls /etc/mysql
+  register: result
+  changed_when: false
+  ignore_errors: true
+
+- name: Fail when mysql has not been installed
+  assert:
+    that:
+      - result.rc == 0
+      - '"No such" not in result.stdout'
+    fail_msg: MySQL has not been installed, use aminvakil.mysql_initial to install MySQL first.
+
+- name: Include vault
+  include_vars: defaults/vault.yml
+  no_log: true
+  tags: default_vault
+
+- name: Apply less secure hardening configuration temporary
+  template:
+    src: 'hardening_temp.cnf.j2'
+    dest: /etc/mysql/conf.d/hardening.cnf
+    owner: root
+    group: mysql
+    mode: '0640'
+  changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
+
+- name: Restart mysql
+  systemd:
+    name: mysqld
+    state: restarted
+  changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
+
+- name: Create "{{ mysql_db_user }}" user
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ mysql_db_user }}"
+    password: "{{ mysql_db_password }}"
+    priv: "{{ mysql_db_user }}.*:ALL,GRANT"
+    host: "localhost"
+  no_log: true
+
+- name: Create "{{ mysql_db_user }}" database
+  mysql_db:
+    login_user: "{{ mysql_db_user }}"
+    login_password: "{{ mysql_db_password }}"
+    name: "{{ mysql_db_user }}"
+    state: present
+  no_log: true
+
+- name: Reset secure hardening configuration
+  template:
+    src: 'hardening.cnf.j2'
+    dest: /etc/mysql/conf.d/hardening.cnf
+    owner: root
+    group: mysql
+    mode: '0640'
+  changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
+  notify: restart mysql

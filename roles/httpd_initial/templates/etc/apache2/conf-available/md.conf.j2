@@ -1,0 +1,8 @@
+MDBaseServer              on
+MDCertificateProtocol     ACME
+MDCAChallenges            http-01
+MDDriveMode               auto
+MDPrivateKeys             RSA 4096
+MDRenewWindow             33%
+MDStoreDir                md
+MDCertificateAuthority    https://acme-{{ staging | ternary('staging-', '') }}v02.api.letsencrypt.org/directory

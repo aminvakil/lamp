@@ -1,0 +1,98 @@
+---
+- name: Install MariaDB Server 10
+  apt:
+    name: mariadb-server
+    install_recommends: no
+    state: present
+  notify: restart mysql
+
+- name: Enable and start service
+  systemd:
+    name: mysqld
+    enabled: yes
+    state: started
+
+- name: Add Python MySQL support
+  apt:
+    name: python3-pymysql
+    install_recommends: no
+    state: present
+
+- name: Check if mysql has been configured or not
+  stat:
+    path: /etc/mysql/conf.d/hardening.cnf
+  register: mysql_configured
+
+- block:
+    - name: Include vault
+      include_vars: defaults/vault.yml
+      no_log: true
+      tags: default_vault
+
+    - name: Change root user password on first run
+      community.mysql.mysql_user:
+        name: root
+        password: "{{ mysql_root_password }}"
+        host_all: true
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+      no_log: true
+
+    - name: delete anonymous MySQL server user for {{ ansible_hostname }}
+      community.mysql.mysql_user:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        user: ""
+        state: "absent"
+        host_all: true
+      no_log: true
+
+    - name: remove the MySQL test database
+      community.mysql.mysql_db:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        db: test
+        state: absent
+      no_log: true
+
+    - name: protect my.cnf
+      file:
+        path: /etc/mysql/my.cnf
+        mode: '0640'
+        owner: root
+        group: mysql
+        follow: true
+        state: file
+
+    - name: ensure permissions on mysql-datadir are correct
+      file:
+        path: /var/lib/mysql
+        state: directory
+        owner: mysql
+        group: mysql
+        mode: '0750'
+
+    - name: ensure permissions on mysql-logfile are correct
+      file:
+        path: /var/log/mysql/error.log
+        state: file
+        owner: mysql
+        group: adm
+        mode: '0640'
+
+    - name: check mysql configuration-directory exists and has right permissions
+      file:
+        path: /etc/mysql/conf.d
+        state: directory
+        owner: mysql
+        group: adm
+        mode: '0750'
+
+    - name: apply hardening configuration
+      template:
+        src: 'hardening.cnf.j2'
+        dest: /etc/mysql/conf.d/hardening.cnf
+        owner: root
+        group: mysql
+        mode: '0640'
+      notify: restart mysql
+  when: not mysql_configured.stat.exists

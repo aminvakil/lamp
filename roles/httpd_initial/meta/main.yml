@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: aminvakil
+  role_name: httpd_initial
+  description: Installs and Configures Apache HTTPD on Debian Buster
+  license: GPL-3.0-only
+  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+
+  galaxy_tags:
+    - debian
+    - apache
+    - lamp

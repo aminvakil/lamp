@@ -1,0 +1,30 @@
+---
+- name: Enable ssl and md module
+  community.general.apache2_module:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ssl
+    - md
+  notify: restart apache2
+
+- name: Create Apache conf for SSL
+  template:
+    src: templates/etc/apache2/conf-available/ssl.conf.j2
+    dest: /etc/apache2/conf-available/ssl.conf
+    mode: '0600'
+
+- name: Create Apache conf for mod_md
+  template:
+    src: templates/etc/apache2/conf-available/md.conf.j2
+    dest: /etc/apache2/conf-available/md.conf
+    mode: '0600'
+
+- name: Enable configurations
+  file:
+    src: /etc/apache2/conf-available/{{ item }}.conf
+    dest: /etc/apache2/conf-enabled/{{ item }}.conf
+    state: link
+  loop:
+    - ssl
+    - md

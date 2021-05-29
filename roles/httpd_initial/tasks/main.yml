@@ -1,0 +1,59 @@
+---
+- name: Install apache2
+  apt:
+    name: apache2
+    install_recommends: no
+    state: present
+  notify: restart apache2
+
+- name: Enable service
+  systemd:
+    name: apache2
+    enabled: yes
+
+- name: Edit Apache main conf Configuration
+  template:
+    src: templates/etc/apache2/apache2.conf.j2
+    dest: /etc/apache2/apache2.conf
+    mode: '0600'
+
+- name: Enable headers module
+  community.general.apache2_module:
+    name: headers
+    state: present
+
+- name: Edit Apache security configuration
+  template:
+    src: templates/etc/apache2/conf-available/security.conf.j2
+    dest: /etc/apache2/conf-available/security.conf
+    mode: '0600'
+
+- name: Change permissions of apache2 folders
+  file:
+    path: /etc/apache2/{{ item }}
+    mode: '0700'
+  loop:
+    - conf-available
+    - conf-enabled
+    - mods-available
+    - mods-enabled
+    - sites-available
+    - sites-enabled
+
+- name: Disable unnecessary configuration (serve-cgi-bin.conf)
+  file:
+    path: /etc/apache2/conf-enabled/serve-cgi-bin.conf
+    state: absent
+
+- name: Disable default site configuration (000-default.conf)
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+
+- name: Include https configurations
+  include_tasks: https.yml
+  when: https | bool
+
+- name: Include cloudflare configurations
+  include_tasks: cloudflare.yml
+  when: cloudflare | bool
