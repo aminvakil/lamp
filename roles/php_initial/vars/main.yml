@@ -1,0 +1,7 @@
+---
+php_packages:
+  - php
+  - php-cli
+  - php-common
+  - php-mysql
+  - php-fpm

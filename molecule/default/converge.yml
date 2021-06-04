@@ -11,3 +11,4 @@
     - role: nginx_initial
     - role: mysql_initial
     - role: mysql_add_user
+    - role: php_initial

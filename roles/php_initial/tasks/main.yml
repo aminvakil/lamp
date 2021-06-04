@@ -1,0 +1,19 @@
+---
+- name: Install php
+  apt:
+    name: "{{ php_packages }}"
+    install_recommends: no
+    state: present
+
+- name: Enable service
+  systemd:
+    name: php7.3-fpm
+    enabled: yes
+
+- name: Change default php.ini
+  lineinfile:
+    path: /etc/php/7.3/fpm/php.ini
+    state: present
+    regexp: ';cgi.fix_pathinfo=1'
+    line: 'cgi.fix_pathinfo=0'
+    backup: yes
