@@ -38,7 +38,7 @@ jobs:
         https: [false, true]
         cloudflare: [false, true]
         staging: [false, true]
-        distro: [debian10]
+        distro: [debian10, debian11]
 
     steps:
       - name: Check out the codebase.
