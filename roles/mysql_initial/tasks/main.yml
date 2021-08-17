@@ -78,6 +78,9 @@
         owner: mysql
         group: adm
         mode: '0640'
+      register: result
+      failed_when:
+        - "'is absent' not in result.stdout"
 
     - name: check mysql configuration-directory exists and has right permissions
       file:
