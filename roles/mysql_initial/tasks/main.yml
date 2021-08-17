@@ -78,6 +78,9 @@
         owner: mysql
         group: adm
         mode: '0640'
+      register: result
+      failed_when:
+        - "result.msg is defined and 'is absent' not in result.msg"
 
     - name: check mysql configuration-directory exists and has right permissions
       file:
