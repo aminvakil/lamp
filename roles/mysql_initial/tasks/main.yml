@@ -2,20 +2,20 @@
 - name: Install MariaDB Server 10
   apt:
     name: mariadb-server
-    install_recommends: no
+    install_recommends: false
     state: present
   notify: restart mysql
 
 - name: Enable and start service
   systemd:
     name: mysqld
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Add Python MySQL support
   apt:
     name: python3-pymysql
-    install_recommends: no
+    install_recommends: false
     state: present
 
 - name: Check if mysql has been configured or not

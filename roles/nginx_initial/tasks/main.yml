@@ -2,14 +2,14 @@
 - name: Install nginx
   apt:
     name: nginx
-    install_recommends: no
+    install_recommends: false
     state: present
   notify: restart nginx
 
 - name: Enable service
   systemd:
     name: nginx
-    enabled: yes
+    enabled: true
 
 - name: Edit Nginx main conf Configuration
   template:

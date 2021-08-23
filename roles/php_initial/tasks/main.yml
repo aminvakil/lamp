@@ -2,7 +2,7 @@
 - name: Install php
   apt:
     name: "{{ php_packages }}"
-    install_recommends: no
+    install_recommends: false
     state: present
 
 - name: Set php version
@@ -16,7 +16,7 @@
 - name: Enable service
   systemd:
     name: php{{ php_version.stdout }}-fpm
-    enabled: yes
+    enabled: true
 
 - name: Change default php.ini
   lineinfile:
@@ -24,4 +24,4 @@
     state: present
     regexp: ';cgi.fix_pathinfo=1'
     line: 'cgi.fix_pathinfo=0'
-    backup: yes
+    backup: true

@@ -2,14 +2,14 @@
 - name: Install apache2
   apt:
     name: apache2
-    install_recommends: no
+    install_recommends: false
     state: present
   notify: restart apache2
 
 - name: Enable service
   systemd:
     name: apache2
-    enabled: yes
+    enabled: true
 
 - name: Edit Apache main conf Configuration
   template:

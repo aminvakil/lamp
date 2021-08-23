@@ -2,15 +2,15 @@
 - name: Create group {{ user_name }}
   group:
     name: "{{ user_name }}"
-    system: yes
+    system: true
     state: present
 
 - name: Create user {{ user_name }}
   user:
     name: "{{ user_name }}"
     group: "{{ user_name }}"
-    system: yes
-    create_home: yes
+    system: true
+    create_home: true
     home: /srv/{{ user_name }}
     shell: /sbin/nologin
 
