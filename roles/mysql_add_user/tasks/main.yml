@@ -52,7 +52,7 @@
     name: "{{ mysql_db_user }}"
     password: "{{ mysql_db_password }}"
     priv: "{{ mysql_db_user }}.*:ALL,GRANT"
-    host: "localhost"
+    host: "{{ mysql_remote_ip }}"
   no_log: true
 
 - name: Create "{{ mysql_db_user }}" database

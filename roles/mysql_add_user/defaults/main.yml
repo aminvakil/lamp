@@ -3,3 +3,4 @@ mysql_initial: false
 mysql_root_password: "{{ vault_mysql_root_password }}"
 mysql_db_user: "{{ vault_mysql_db_user }}"
 mysql_db_password: "{{ vault_mysql_db_password }}"
+mysql_remote_ip: "localhost"
