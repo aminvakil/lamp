@@ -13,6 +13,8 @@ platforms:
     override_command: false
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: "../../roles"
   config_options:
     defaults:
       vault_password_file: "${MOLECULE_PROJECT_DIRECTORY}/vault.pw"
