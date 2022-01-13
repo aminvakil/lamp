@@ -1,9 +1,25 @@
 ---
-- name: Install nginx
+- name: ensure gnupg2 is installed
+  apt:
+    name: gnupg2
+    state: present
+
+- name: Add nginx apt signing key
+  apt_key:
+    url: https://nginx.org/keys/nginx_signing.key
+    state: present
+
+- name: Add official nginx repository
+  apt_repository:
+    repo: deb http://nginx.org/packages/debian buster nginx
+    state: present
+    filename: nginx
+
+- name: Install the nginx from their official repository
   apt:
     name: nginx
-    install_recommends: false
     state: present
+    update_cache: true
   notify: restart nginx
 
 - name: Enable service
@@ -23,14 +39,10 @@
     mode: '0700'
   loop:
     - conf.d
-    - modules-available
-    - modules-enabled
-    - sites-available
-    - sites-enabled
 
 - name: Remove default nginx configuration
   file:
-    path: /etc/nginx/sites-enabled/default
+    path: /etc/nginx/conf.d/default.conf
     state: absent
 
 - name: Include cloudflare configurations
