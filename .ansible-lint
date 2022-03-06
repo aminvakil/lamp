@@ -1,3 +1,5 @@
 ---
 warn_list:
   - yaml
+skip_list:
+  - fqcn-builtins
