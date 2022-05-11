@@ -1,16 +1,16 @@
 ---
-- block:
-    - name: Install aminvakil.mysql_initial role from ansible-galaxy
-      command: ansible-galaxy install aminvakil.mysql_initial
-      register: result
-      changed_when: '"already installed" not in result.stderr'
-      become: false
-      delegate_to: localhost
-
-    - name: Install mysql
-      include_role:
-        name: aminvakil.lamp.mysql_initial
-  when: mysql_initial | bool
+# - block:
+#     - name: Install aminvakil.mysql_initial role from ansible-galaxy
+#       command: ansible-galaxy install aminvakil.mysql_initial
+#       register: result
+#       changed_when: '"already installed" not in result.stderr'
+#       become: false
+#       delegate_to: localhost
+#
+#     - name: Install mysql
+#       include_role:
+#         name: aminvakil.lamp.mysql_initial
+#   when: mysql_initial | bool
 
 - name: Check if mysql is installed or not
   command: ls /etc/mysql
