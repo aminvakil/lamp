@@ -21,32 +21,13 @@
 
 - name: Create public_html in /srv/{{ user_name }}
   file:
-    path: /srv/{{ user_name }}/public_html
+    path: "{{ item }}"
     state: directory
     mode: '0711'
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
-
-- name: Create tmp in /srv/{{ user_name }}
-  file:
-    path: /srv/{{ user_name }}/tmp
-    state: directory
-    mode: '0711'
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-
-- name: Create session in /srv/{{ user_name }}/tmp
-  file:
-    path: /srv/{{ user_name }}/tmp/session
-    state: directory
-    mode: '0711'
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-
-- name: Create upload in /srv/{{ user_name }}/tmp
-  file:
-    path: /srv/{{ user_name }}/tmp/upload
-    state: directory
-    mode: '0711'
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+  loop:
+    - /srv/{{ user_name }}/public_html
+    - /srv/{{ user_name }}/tmp
+    - /srv/{{ user_name }}/tmp/session
+    - /srv/{{ user_name }}/tmp/upload
