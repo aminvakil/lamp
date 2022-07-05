@@ -12,6 +12,7 @@
   args:
     warn: false
   changed_when: false
+  check_mode: false
 
 - name: Enable service
   systemd:
