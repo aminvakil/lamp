@@ -3,6 +3,7 @@ galaxy_info:
   author: aminvakil
   role_name: create_user
   description: Creates User
+  standalone: true
   license: GPL-3.0-only
   min_ansible_version: "2.1"
   platforms:

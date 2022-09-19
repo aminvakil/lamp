@@ -3,6 +3,7 @@ galaxy_info:
   author: aminvakil
   role_name: nginx_initial
   description: Installs and Configures Nginx on Debian Buster
+  standalone: true
   license: GPL-3.0-only
   min_ansible_version: "2.1"
   platforms:
