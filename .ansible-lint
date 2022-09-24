@@ -1,6 +1,7 @@
 ---
 warn_list:
   - yaml
+  - key-order
 skip_list:
   - fqcn-builtins
   - name[casing]
