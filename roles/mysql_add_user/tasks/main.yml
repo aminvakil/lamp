@@ -46,7 +46,7 @@
   changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
 
 - name: Create "{{ mysql_db_user }}" user
-  mysql_user:
+  community.mysql.mysql_user:
     login_user: root
     login_password: "{{ mysql_root_password }}"
     name: "{{ mysql_db_user }}"
@@ -56,7 +56,7 @@
   no_log: true
 
 - name: Create "{{ mysql_db_user }}" database
-  mysql_db:
+  community.mysql.mysql_db:
     login_user: "{{ mysql_db_user }}"
     login_password: "{{ mysql_db_password }}"
     name: "{{ mysql_db_user }}"
