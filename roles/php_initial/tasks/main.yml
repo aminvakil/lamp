@@ -9,10 +9,10 @@
   shell:
     cmd: php --version | head -n 1 | awk '{print $2}' | cut -f1,2 -d'.'
   register: php_version
-  args:
-    warn: false
   changed_when: false
   check_mode: false
+  tags:
+    - skip_ansible_lint
 
 - name: Enable service
   systemd:
