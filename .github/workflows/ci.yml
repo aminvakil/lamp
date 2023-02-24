@@ -69,6 +69,7 @@ jobs:
           HTTPS: ${{ matrix.https }}
           CLOUDFLARE: ${{ matrix.cloudflare }}
           STAGING: ${{ matrix.staging }}
+          MYSQL_INITIAL: ${{ matrix.mysql_initial }}
 
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
