@@ -5,6 +5,7 @@
     https: "{{ lookup('env', 'HTTPS') }}"
     cloudflare: "{{ lookup('env', 'CLOUDFLARE') }}"
     staging: "{{ lookup('env', 'STAGING') }}"
+    mysql_initial: "{{ lookup('env', 'MYSQL_INITIAL') }}"
   roles:
     - role: create_user
     - role: httpd_initial
