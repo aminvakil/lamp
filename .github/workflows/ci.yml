@@ -56,7 +56,7 @@ jobs:
       - name: Fix apparmor mess in ubuntu host!
         run: |
             set -x
-            sudo apt-get remove mysql-server grub* --purge
+            sudo apt-get remove mysql-server --purge
             sudo apt-get update
             sudo apt-get dist-upgrade -y
             sudo apt-get install apparmor-profiles -y
