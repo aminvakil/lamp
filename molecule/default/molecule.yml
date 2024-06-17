@@ -6,8 +6,9 @@ driver:
 platforms:
   - name: instance
     image: "quay.io/aminvakil/${MOLECULE_DISTRO}-systemd:latest"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    tmpfs:
+      - /run
+      - /tmp
     privileged: true
     pre_build_image: true
     override_command: false
