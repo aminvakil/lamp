@@ -11,7 +11,7 @@
 
 - name: Add official nginx repository
   apt_repository:
-    repo: deb http://nginx.org/packages/debian buster nginx
+    repo: deb http://nginx.org/packages/debian {{ ansible_distribution_release }} nginx
     state: present
     filename: nginx
 
