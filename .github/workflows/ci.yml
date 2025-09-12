@@ -39,7 +39,7 @@ jobs:
         cloudflare: [false, true]
         staging: [false, true]
         mysql_initial: [false, true]
-        distro: ["debian11", "debian12"]
+        distro: ["debian11", "debian12", "debian13"]
 
     steps:
       - name: Check out the codebase.
