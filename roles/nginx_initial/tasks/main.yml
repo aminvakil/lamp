@@ -5,13 +5,17 @@
     state: present
 
 - name: Add nginx apt signing key
-  apt_key:
+  get_url:
     url: https://nginx.org/keys/nginx_signing.key
-    state: present
+    dest: "/usr/share/keyrings/nginx_signing.key"
+    checksum: sha256:55385da31d198fa6a5012d40ae98ecb272a6c4e8fffffba94719ffd3e87de37a
+    mode: "0644"
+    owner: root
+    group: root
 
 - name: Add official nginx repository
   apt_repository:
-    repo: deb http://nginx.org/packages/debian {{ ansible_distribution_release }} nginx
+    repo: deb [signed-by=/usr/share/keyrings/nginx_signing.key] http://nginx.org/packages/debian {{ ansible_distribution_release }} nginx
     state: present
     filename: nginx
 
