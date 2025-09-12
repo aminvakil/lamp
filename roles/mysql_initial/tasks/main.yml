@@ -1,5 +1,5 @@
 ---
-- name: Install MariaDB Server 10
+- name: Install MariaDB Server
   apt:
     name: mariadb-server
     install_recommends: false
