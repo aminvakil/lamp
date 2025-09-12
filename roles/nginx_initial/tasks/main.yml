@@ -19,7 +19,7 @@
     state: present
     filename: nginx
 
-- name: Install the nginx from their official repository
+- name: Install nginx from their official repository
   apt:
     name: nginx
     state: present
@@ -31,7 +31,7 @@
     name: nginx
     enabled: true
 
-- name: Edit Nginx main conf Configuration
+- name: Edit nginx main conf Configuration
   template:
     src: templates/etc/nginx/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
