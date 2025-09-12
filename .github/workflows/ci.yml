@@ -51,7 +51,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule-plugins[docker] docker 'requests<2.32.0'
+        run: pip3 install ansible molecule-plugins[docker] docker
 
       - name: Fix apparmor mess in ubuntu host!
         run: |
