@@ -31,7 +31,7 @@
       tags: default_vault
 
     - name: Change root user password on first run
-      community.mysql.mysql_user:
+      ansible.mysql.mysql_user:
         name: root
         password: "{{ mysql_root_password }}"
         host_all: true
@@ -39,16 +39,16 @@
       no_log: true
 
     - name: delete anonymous MySQL server user for {{ ansible_hostname }}
-      community.mysql.mysql_user:
+      ansible.mysql.mysql_user:
         login_user: root
         login_password: "{{ mysql_root_password }}"
-        user: ""
+        name: ""
         state: "absent"
         host_all: true
       no_log: true
 
     - name: remove the MySQL test database
-      community.mysql.mysql_db:
+      ansible.mysql.mysql_db:
         login_user: root
         login_password: "{{ mysql_root_password }}"
         db: test
